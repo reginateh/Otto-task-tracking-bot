@@ -6,9 +6,16 @@ public class TaskList {
         this.taskList = new ArrayList<>();
     }
 
-    public void addTask(String description) {
-        Task newTask = new Task(description);
+    public Task addTask(String[] info) {
+        String type = info[0];
+        Task newTask = switch (type) {
+            case "todo" -> new Todo(info[1]);
+            case "deadline" -> new Deadline(info[1], info[2]);
+            case "event" -> new Event(info[1], info[2], info[3]);
+            default -> null;
+        };
         this.taskList.add(newTask);
+        return newTask;
     }
 
     public Task markComplete(int taskIndex, boolean status) {
@@ -17,6 +24,11 @@ public class TaskList {
         }
         return this.taskList.get(taskIndex).setComplete(status);
     }
+
+    public int getNumOfTasks() {
+        return this.taskList.size();
+    }
+
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder("Here are the tasks in your list. Otto would rather be asleep than dealing with all this.");

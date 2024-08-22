@@ -40,10 +40,11 @@ public class Otto {
         displayMsg(taskList.toString());
     }
 
-    private void addTask(String description) {
-        this.taskList.addTask(description);
-        displayMsg("Hmph. More work? Otto will note it down, but he’d much rather be sleeping.\nAdded: "
-                + description);
+    private void addTask(String[] info) {
+        Task newTask = this.taskList.addTask(info);
+        displayMsg("More work? Otto has noted it down, but he’d much rather be sleeping.\n"
+                + newTask.toString()
+                + "\nNow you have " + this.taskList.getNumOfTasks() + " task(s) in the list.");
     }
 
     private void markComplete(String rawIndex, boolean status) {
@@ -52,7 +53,7 @@ public class Otto {
             Task task = this.taskList.markComplete(index - 1, status);
             this.displayMsg((status
                     ? "Well, finally. You finished something.\n"
-                    : "So you didn’t finish that task. Try to get it done so Otto can rest easy.\n")
+                    : "So you didn't finish that task. Try to get it done so Otto can rest easy.\n")
                     + task.toString());
         } catch (NumberFormatException e) {
             this.displayMsg("Error: expect an integer but get: " + rawIndex);
@@ -80,8 +81,13 @@ public class Otto {
                     this.markComplete(command[1], false);
                 }
                 break;
+            case "todo":
+            case "deadline":
+            case "event":
+                this.addTask(Parser.parseTask(userInput));
+                break;
             default:
-                this.addTask(userInput);
+                this.displayMsg("Otto doesn't recognize this command.");
         }
     }
 
