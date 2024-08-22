@@ -9,23 +9,16 @@ public class Otto {
     }
 
     private void intro() {
-        String owl = "\t            z\n"
-                + "\t          z\n"
-                + "\t   ^_^  z\n"
-                + "\t  (-,-)  \n"
-                + "\t  { \" }  \n"
-                + "\t---\"-\"---\n";
-        String intro = "\n\tOtto would rather be napping, \n\tbut he suppose he can help you with your tasks.\n";
-        System.out.println(owl + intro);
+        System.out.println((OttoResponses.owl + OttoResponses.intro).indent(4));
         printLine();
     }
 
     private void printLine() {
-        System.out.println("\t____________________________________________________________\n");
+        System.out.println(OttoResponses.line.indent(4));
     }
 
     private void exit() {
-        this.displayMsg("Otto is signing off now. Don't wake him up again.");
+        this.displayMsg(OttoResponses.bye);
     }
 
     private void displayMsg(String msg) {
@@ -40,19 +33,18 @@ public class Otto {
 
     private void addTask(String[] info) {
         Task newTask = this.taskList.addTask(info);
-        displayMsg("More work? Otto has noted it down, but he'd much rather be sleeping.\n"
-                + newTask.toString()
-                + "\nNow you have " + this.taskList.getNumOfTasks() + " task(s) in the list.");
+        displayMsg(OttoResponses.addTask + newTask.toString()
+                + String.format(OttoResponses.numOfTasks, this.taskList.getNumOfTasks()));
     }
 
     private void deleteTask(int index) throws OttoException {
         try {
             Task deletedTask = this.taskList.deleteTask(index - 1);
-            this.displayMsg("Finally, something Otto can get behind—deleting a task. It's gone now, just like Otto wishes he could be... back to his nap.\n"
+            this.displayMsg(OttoResponses.deleteTask
                     + deletedTask.toString()
-                    + "\nNow you have " + this.taskList.getNumOfTasks() + " task(s) in the list.");
+                    + String.format(OttoResponses.numOfTasks, this.taskList.getNumOfTasks()));
         } catch (IndexOutOfBoundsException e) {
-            throw new OttoException("You need to give Otto an index that is in the list. Can't you even count?");
+            throw new OttoException(OttoResponses.indexError);
         }
     }
 
@@ -60,11 +52,11 @@ public class Otto {
         try {
             Task task = this.taskList.markComplete(index - 1, status);
             this.displayMsg((status
-                    ? "Well, finally. You finished something.\n"
-                    : "So you didn't finish that task. Try to get it done so Otto can rest easy.\n")
+                    ? OttoResponses.complete
+                    : OttoResponses.incomplete)
                     + task.toString());
         } catch (IndexOutOfBoundsException e) {
-            throw new OttoException("You need to give Otto an index that is in the list. Can't you even count?");
+            throw new OttoException(OttoResponses.indexError);
         }
     }
 
@@ -97,7 +89,7 @@ public class Otto {
                     this.deleteTask(Parser.parseDeleteTask(command));
                     break;
                 default:
-                    throw new OttoException("Otto doesn't recognize this command. Speak English.");
+                    throw new OttoException(OttoResponses.unknown);
             }
         } catch (OttoException e) {
             this.displayMsg(e.getMessage());

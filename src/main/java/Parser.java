@@ -7,7 +7,7 @@ public class Parser {
             case "todo" -> parseTodoTask(task);
             case "deadline" -> parseDeadlineTask(task);
             case "event" -> parseEventTask(task);
-            default -> throw new OttoException("Unknown task type");
+            default -> throw new OttoException(OttoResponses.unknown);
         };
     }
 
@@ -18,7 +18,7 @@ public class Parser {
             String description = matcher.group(1);
             return new String[]{"todo", description};
         } else {
-            throw new OttoException("Todo must contain a description.");
+            throw new OttoException(OttoResponses.todoError);
         }
     }
 
@@ -30,7 +30,7 @@ public class Parser {
             String deadline = matcher.group(2);
             return new String[]{"deadline", description, deadline};
         } else {
-            throw new OttoException("The format is wrong. Missing description or deadline.");
+            throw new OttoException(OttoResponses.deadlineError);
         }
     }
 
@@ -43,29 +43,29 @@ public class Parser {
             String to = matcher.group(3);
             return new String[]{"event", description, from, to};
         } else {
-            throw new OttoException("The format is wrong. Missing description, start time or end time.");
+            throw new OttoException(OttoResponses.eventError);
         }
     }
 
     public static int parseMarkComplete(String[] command) throws OttoException {
         if (command.length <= 1) {
-            throw new OttoException("You need to tell Otto what task you want to mark. Not like Otto cares though.");
+            throw new OttoException(OttoResponses.markError);
         }
         try {
             return Integer.parseInt(command[1]);
         } catch (NumberFormatException e) {
-            throw new OttoException("You need to tell Otto the index of a task. Index means an integer.");
+            throw new OttoException(OttoResponses.indexError);
         }
     }
 
     public static int parseDeleteTask(String[] command) throws OttoException {
         if (command.length <= 1) {
-            throw new OttoException("You need to tell Otto what task you want to delete. Not like Otto cares though.");
+            throw new OttoException(OttoResponses.deleteError);
         }
         try {
             return Integer.parseInt(command[1]);
         } catch (NumberFormatException e) {
-            throw new OttoException("You need to tell Otto the index of a task. Index means an integer.");
+            throw new OttoException(OttoResponses.indexError);
         }
     }
 }
