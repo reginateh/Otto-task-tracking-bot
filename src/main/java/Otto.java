@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Otto {
-    private static void intro() {
+    private void intro() {
         String owl = "\t            z\n"
                 + "\t          z\n"
                 + "\t   ^_^  z\n"
@@ -13,32 +13,33 @@ public class Otto {
         printLine();
     }
 
-    private static void printLine() {
+    private void printLine() {
         System.out.println("\t____________________________________________________________\n");
     }
 
-    private static void exit() {
+    private void exit() {
         printLine();
         System.out.println("\tOtto is signing off now. Don’t wake him up again.");
         printLine();
     }
 
-    private static void displayMsg(String msg) {
+    private void displayMsg(String msg) {
         printLine();
         System.out.println("\t" + msg);
         printLine();
     }
 
     public static void main(String[] args) {
-        intro();
+        Otto instance = new Otto();
+        instance.intro();
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String userInput = scanner.nextLine().toLowerCase();
             if (userInput.equals("bye")) {
                 break;
             }
-            displayMsg(userInput);
+            instance.displayMsg(userInput);
         }
-        exit();
+        instance.exit();
     }
 }
