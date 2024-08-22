@@ -14,8 +14,9 @@ public class TaskList {
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder("Here are the tasks in your list. Otto would rather be asleep than dealing with all this.");
+        int idx = 1;
         for (Task task : taskList) {
-            res.append("\n").append(task.toString());
+            res.append(String.format("\n\t%d. %s", idx++, task.toString()));
         }
         return res.toString();
     }

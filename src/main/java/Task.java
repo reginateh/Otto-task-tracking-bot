@@ -1,17 +1,18 @@
 public class Task {
-    private static int numOfTasks = 0;
-    private int id;
     private String description;
+    private boolean isComplete;
 
     public Task(String description) {
         this.description = description;
-        Task.numOfTasks++;
-        this.id = Task.numOfTasks;
+        this.isComplete = false;
     }
 
+    public void setComplete(boolean status) {
+        this.isComplete = status;
+    }
 
     @Override
     public String toString() {
-        return String.format("\t%d. %s", this.id, this.description);
+        return String.format("[%s] %s", this.isComplete ? "X" : " ", this.description);
     }
 }
