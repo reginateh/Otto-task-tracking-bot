@@ -25,9 +25,7 @@ public class Otto {
     }
 
     private void exit() {
-        printLine();
-        System.out.println("\tOtto is signing off now. Don't wake him up again.");
-        printLine();
+        this.displayMsg("Otto is signing off now. Don't wake him up again.");
     }
 
     private void displayMsg(String msg) {
@@ -45,6 +43,17 @@ public class Otto {
         displayMsg("More work? Otto has noted it down, but he'd much rather be sleeping.\n"
                 + newTask.toString()
                 + "\nNow you have " + this.taskList.getNumOfTasks() + " task(s) in the list.");
+    }
+
+    private void deleteTask(int index) throws OttoException {
+        try {
+            Task deletedTask = this.taskList.deleteTask(index - 1);
+            this.displayMsg("Finally, something Otto can get behind—deleting a task. It's gone now, just like Otto wishes he could be... back to his nap.\n"
+                    + deletedTask.toString()
+                    + "\nNow you have " + this.taskList.getNumOfTasks() + " task(s) in the list.");
+        } catch (IndexOutOfBoundsException e) {
+            throw new OttoException("You need to give Otto an index that is in the list. Can't you even count?");
+        }
     }
 
     private void markComplete(int index, boolean status) throws OttoException {
@@ -83,6 +92,9 @@ public class Otto {
                     break;
                 case "event":
                     this.addTask(Parser.parseTask("event", userInput));
+                    break;
+                case "delete":
+                    this.deleteTask(Parser.parseDeleteTask(command));
                     break;
                 default:
                     throw new OttoException("Otto doesn't recognize this command. Speak English.");

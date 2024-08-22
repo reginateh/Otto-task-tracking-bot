@@ -19,6 +19,10 @@ public class TaskList {
         return newTask;
     }
 
+    public Task deleteTask(int taskIndex) {
+        return this.taskList.remove(taskIndex);
+    }
+
     public Task markComplete(int taskIndex, boolean status) {
         if (taskIndex >= this.taskList.size()) {
             throw new IndexOutOfBoundsException();

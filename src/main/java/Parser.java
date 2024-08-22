@@ -57,4 +57,15 @@ public class Parser {
             throw new OttoException("You need to tell Otto the index of a task. Index means an integer.");
         }
     }
+
+    public static int parseDeleteTask(String[] command) throws OttoException {
+        if (command.length <= 1) {
+            throw new OttoException("You need to tell Otto what task you want to delete. Not like Otto cares though.");
+        }
+        try {
+            return Integer.parseInt(command[1]);
+        } catch (NumberFormatException e) {
+            throw new OttoException("You need to tell Otto the index of a task. Index means an integer.");
+        }
+    }
 }
