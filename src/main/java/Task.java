@@ -7,8 +7,9 @@ public class Task {
         this.isComplete = false;
     }
 
-    public void setComplete(boolean status) {
+    public Task setComplete(boolean status) {
         this.isComplete = status;
+        return this;
     }
 
     @Override

@@ -11,12 +11,18 @@ public class TaskList {
         this.taskList.add(newTask);
     }
 
+    public Task markComplete(int taskIndex, boolean status) {
+        if (taskIndex >= this.taskList.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        return this.taskList.get(taskIndex).setComplete(status);
+    }
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder("Here are the tasks in your list. Otto would rather be asleep than dealing with all this.");
         int idx = 1;
         for (Task task : taskList) {
-            res.append(String.format("\n\t%d. %s", idx++, task.toString()));
+            res.append(String.format("\n%d. %s", idx++, task.toString()));
         }
         return res.toString();
     }
