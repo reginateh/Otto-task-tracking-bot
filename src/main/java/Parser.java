@@ -2,46 +2,40 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
-    public static String[] parseTask(String task) {
-        if (task.startsWith("todo")) {
-            return parseTodoTask(task);
-        } else if (task.startsWith("deadline")) {
-            return parseDeadlineTask(task);
-        } else if (task.startsWith("event")) {
-            return parseEventTask(task);
-        } else {
-            System.out.println("Unknown task type: " + task);
-        }
-        return new String[0];
+    public static String[] parseTask(String type, String task) throws OttoException {
+        return switch (type) {
+            case "todo" -> parseTodoTask(task);
+            case "deadline" -> parseDeadlineTask(task);
+            case "event" -> parseEventTask(task);
+            default -> throw new OttoException("Unknown task type");
+        };
     }
 
-    private static String[] parseTodoTask(String task) {
-        Pattern pattern = Pattern.compile("todo (.+)");
+    private static String[] parseTodoTask(String task) throws OttoException {
+        Pattern pattern = Pattern.compile("todo (\\S.*)", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(task);
         if (matcher.matches()) {
             String description = matcher.group(1);
             return new String[]{"todo", description};
         } else {
-            System.out.println("Todo must contain a description: " + task);
+            throw new OttoException("Todo must contain a description.");
         }
-        return new String[0];
     }
 
-    private static String[] parseDeadlineTask(String task) {
-        Pattern pattern = Pattern.compile("deadline (.+) /by (.+)");
+    private static String[] parseDeadlineTask(String task) throws OttoException {
+        Pattern pattern = Pattern.compile("deadline (\\S.*) /by (\\S.*)", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(task);
         if (matcher.matches()) {
             String description = matcher.group(1);
             String deadline = matcher.group(2);
             return new String[]{"deadline", description, deadline};
         } else {
-            System.out.println("Invalid deadline format: " + task);
+            throw new OttoException("The format is wrong. Missing description or deadline.");
         }
-        return new String[0];
     }
 
-    private static String[] parseEventTask(String task) {
-        Pattern pattern = Pattern.compile("event (.+) /from (.+) /to (.+)");
+    private static String[] parseEventTask(String task) throws OttoException{
+        Pattern pattern = Pattern.compile("event (\\S.*) /from (\\S.*) /to (\\S.*)", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(task);
         if (matcher.matches()) {
             String description = matcher.group(1);
@@ -49,8 +43,18 @@ public class Parser {
             String to = matcher.group(3);
             return new String[]{"event", description, from, to};
         } else {
-            System.out.println("Invalid event format: " + task);
+            throw new OttoException("The format is wrong. Missing description, start time or end time.");
         }
-        return new String[0];
+    }
+
+    public static int parseMarkComplete(String[] command) throws OttoException {
+        if (command.length <= 1) {
+            throw new OttoException("You need to tell Otto what task you want to mark. Not like Otto cares though.");
+        }
+        try {
+            return Integer.parseInt(command[1]);
+        } catch (NumberFormatException e) {
+            throw new OttoException("You need to tell Otto the index of a task. Index means an integer.");
+        }
     }
 }

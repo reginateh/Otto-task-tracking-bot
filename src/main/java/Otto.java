@@ -47,18 +47,15 @@ public class Otto {
                 + "\nNow you have " + this.taskList.getNumOfTasks() + " task(s) in the list.");
     }
 
-    private void markComplete(String rawIndex, boolean status) {
+    private void markComplete(int index, boolean status) throws OttoException {
         try {
-            int index = Integer.parseInt(rawIndex);
             Task task = this.taskList.markComplete(index - 1, status);
             this.displayMsg((status
                     ? "Well, finally. You finished something.\n"
                     : "So you didn't finish that task. Try to get it done so Otto can rest easy.\n")
                     + task.toString());
-        } catch (NumberFormatException e) {
-            this.displayMsg("Error: expect an integer but get: " + rawIndex);
         } catch (IndexOutOfBoundsException e) {
-            this.displayMsg("Error: task index out of range: " + rawIndex);
+            throw new OttoException("You need to give Otto an index that is in the list. Can't you even count?");
         }
     }
 
@@ -67,27 +64,31 @@ public class Otto {
             return;
         }
         String[] command = userInput.split("\\s+", 2);
-        switch (command[0].toLowerCase()) {
-            case "list":
-                this.displayTaskList();
-                break;
-            case "mark":
-                if (command.length > 1) {
-                    this.markComplete(command[1], true);
-                }
-                break;
-            case "unmark":
-                if (command.length > 1) {
-                    this.markComplete(command[1], false);
-                }
-                break;
-            case "todo":
-            case "deadline":
-            case "event":
-                this.addTask(Parser.parseTask(userInput));
-                break;
-            default:
-                this.displayMsg("Otto doesn't recognize this command.");
+        try {
+            switch (command[0].toLowerCase()) {
+                case "list":
+                    this.displayTaskList();
+                    break;
+                case "mark":
+                    this.markComplete(Parser.parseMarkComplete(command), true);
+                    break;
+                case "unmark":
+                    this.markComplete(Parser.parseMarkComplete(command), false);
+                    break;
+                case "todo":
+                    this.addTask(Parser.parseTask("todo", userInput));
+                    break;
+                case "deadline":
+                    this.addTask(Parser.parseTask("deadline", userInput));
+                    break;
+                case "event":
+                    this.addTask(Parser.parseTask("event", userInput));
+                    break;
+                default:
+                    throw new OttoException("Otto doesn't recognize this command. Speak English.");
+            }
+        } catch (OttoException e) {
+            this.displayMsg(e.getMessage());
         }
     }
 
