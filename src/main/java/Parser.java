@@ -34,7 +34,7 @@ public class Parser {
         }
     }
 
-    private static String[] parseEventTask(String task) throws OttoException{
+    private static String[] parseEventTask(String task) throws OttoException {
         Pattern pattern = Pattern.compile("event (\\S.*) /from (\\S.*) /to (\\S.*)", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(task);
         if (matcher.matches()) {
