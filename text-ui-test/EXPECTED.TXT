@@ -1,7 +1,24 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
+	            z
+	          z
+	   ^_^  z
+	  (-,-)
+	  { " }
+	---"-"---
 
+	Otto would rather be napping,
+	but he suppose he can help you with your tasks.
+
+	____________________________________________________________
+
+	____________________________________________________________
+
+    More work? Otto has noted it down, but he’d much rather be sleeping.
+    [T][ ] borrow book
+    Now you have 1 task(s) in the list.
+
+	____________________________________________________________
+
+	____________________________________________________________
+
+	Otto is signing off now. Don't wake him up again.
+	____________________________________________________________

@@ -26,7 +26,7 @@ public class Otto {
 
     private void exit() {
         printLine();
-        System.out.println("\tOtto is signing off now. Don’t wake him up again.");
+        System.out.println("\tOtto is signing off now. Don't wake him up again.");
         printLine();
     }
 
@@ -42,7 +42,7 @@ public class Otto {
 
     private void addTask(String[] info) {
         Task newTask = this.taskList.addTask(info);
-        displayMsg("More work? Otto has noted it down, but he’d much rather be sleeping.\n"
+        displayMsg("More work? Otto has noted it down, but he'd much rather be sleeping.\n"
                 + newTask.toString()
                 + "\nNow you have " + this.taskList.getNumOfTasks() + " task(s) in the list.");
     }
