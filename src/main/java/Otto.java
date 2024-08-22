@@ -1,4 +1,4 @@
-public class Duke {
+public class Otto {
     public static void main(String[] args) {
         String owl = "            z\n"
                 + "          z\n"
