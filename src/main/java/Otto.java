@@ -2,8 +2,9 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class Otto {
+    private static Otto instance;
     private final TaskList taskList;
-    private static Ui ui = new Ui();
+    private Ui ui = new Ui();
 
     /**
      * Constructor for Otto.
@@ -12,6 +13,17 @@ public class Otto {
      */
     private Otto() {
         this.taskList = new TaskList();
+    }
+
+    public static Otto getInstance() {
+        if (instance == null) {
+            instance = new Otto();
+        }
+        return instance;
+    }
+
+    public Ui getUi() {
+        return ui;
     }
 
     private void run() {
