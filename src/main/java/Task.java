@@ -5,6 +5,7 @@ abstract public class Task {
     public Task(String description) {
         this(description, false);
     }
+
     public Task(String description, boolean isComplete) {
         this.description = description;
         this.isComplete = isComplete;
@@ -13,6 +14,10 @@ abstract public class Task {
     public Task setComplete(boolean status) {
         this.isComplete = status;
         return this;
+    }
+
+    public String getTaskStringForStorage() {
+        return this.toString();
     }
 
     @Override

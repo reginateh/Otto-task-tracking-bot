@@ -90,7 +90,7 @@ public class Storage {
             checkAndCreateFile();
             FileWriter fw = new FileWriter(FILE_PATH);
             for (Task task : tasks) {
-                fw.write(task.toString() + "\n");
+                fw.write(task.getTaskStringForStorage() + "\n");
             }
             fw.close();
         } catch (IOException e) {
