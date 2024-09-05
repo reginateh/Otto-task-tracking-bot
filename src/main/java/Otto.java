@@ -3,46 +3,40 @@ import java.util.Scanner;
 
 public class Otto {
     private final TaskList taskList;
+    private static Ui ui = new Ui();
 
-    public Otto() {
+    /**
+     * Constructor for Otto.
+     * Initializes a new TaskList.
+     * Reading from the file is done in the TaskList constructor.
+     */
+    private Otto() {
         this.taskList = new TaskList();
     }
 
-    private void intro() {
-        System.out.println((OttoResponses.owl + OttoResponses.intro).indent(4));
-        printLine();
-    }
-
-    private void printLine() {
-        System.out.println(OttoResponses.line.indent(4));
-    }
-
-    private void exit() {
-        this.displayMsg(OttoResponses.bye);
-    }
-
-    private void displayMsg(String msg) {
-        printLine();
-        System.out.println(msg.indent(4));
-        printLine();
-    }
-
-    private void displayTaskList() {
-        displayMsg(taskList.toString());
+    private void run() {
+        ui.intro();
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            String userInput = scanner.nextLine();
+            if (userInput.equalsIgnoreCase("bye")) {
+                break;
+            } else {
+                handleInput(userInput);
+            }
+        }
+        ui.exit();
     }
 
     private void addTask(String[] info) {
         Task newTask = this.taskList.addTask(info);
-        displayMsg(OttoResponses.addTask + newTask.toString()
-                + String.format(OttoResponses.numOfTasks, this.taskList.getNumOfTasks()));
+        ui.displayAddedTask(newTask, taskList.getNumOfTasks());
     }
 
     private void deleteTask(int index) throws OttoException {
         try {
             Task deletedTask = this.taskList.deleteTask(index - 1);
-            this.displayMsg(OttoResponses.deleteTask
-                    + deletedTask.toString()
-                    + String.format(OttoResponses.numOfTasks, this.taskList.getNumOfTasks()));
+            ui.displayDeletedTask(deletedTask, taskList.getNumOfTasks());
         } catch (IndexOutOfBoundsException e) {
             throw new OttoException(OttoResponses.indexError);
         }
@@ -51,16 +45,19 @@ public class Otto {
     private void markComplete(int index, boolean status) throws OttoException {
         try {
             Task task = this.taskList.markComplete(index - 1, status);
-            this.displayMsg((status
-                    ? OttoResponses.complete
-                    : OttoResponses.incomplete)
-                    + task.toString());
+            ui.displayMarkedTask(status, task);
         } catch (IndexOutOfBoundsException e) {
             throw new OttoException(OttoResponses.indexError);
         }
     }
 
-    private void handleInput(String userInput) {
+    /**
+     * Handles user input and executes the corresponding command.
+     * Actions include listing tasks, adding tasks, deleting tasks, marking tasks as complete or incomplete.
+     *
+     * @param userInput User input.
+     */
+    public void handleInput(String userInput) {
         if (Objects.equals(userInput, "")) {
             return;
         }
@@ -68,7 +65,7 @@ public class Otto {
         try {
             switch (command[0].toLowerCase()) {
                 case "list":
-                    this.displayTaskList();
+                    ui.displayTaskList(this.taskList.toString());
                     break;
                 case "mark":
                     this.markComplete(Parser.parseMarkComplete(command), true);
@@ -77,37 +74,23 @@ public class Otto {
                     this.markComplete(Parser.parseMarkComplete(command), false);
                     break;
                 case "todo":
-                    this.addTask(Parser.parseTask("todo", userInput));
-                    break;
                 case "deadline":
-                    this.addTask(Parser.parseTask("deadline", userInput));
-                    break;
                 case "event":
-                    this.addTask(Parser.parseTask("event", userInput));
+                    this.addTask(Parser.parseTask(command[0].toLowerCase(), userInput));
                     break;
                 case "delete":
                     this.deleteTask(Parser.parseDeleteTask(command));
                     break;
                 default:
-                    throw new OttoException(OttoResponses.unknown);
+                    throw new OttoException(OttoResponses.unknownCommandError);
             }
         } catch (OttoException e) {
-            this.displayMsg(e.getMessage());
+            ui.displayErrorMsg(e);
         }
     }
 
     public static void main(String[] args) {
         Otto instance = new Otto();
-        instance.intro();
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            String userInput = scanner.nextLine();
-            if (userInput.equalsIgnoreCase("bye")) {
-                break;
-            } else {
-                instance.handleInput(userInput);
-            }
-        }
-        instance.exit();
+        instance.run();
     }
 }
