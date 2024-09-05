@@ -18,6 +18,14 @@ abstract public class Task {
         return this;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
+    public boolean isComplete() {
+        return this.isComplete;
+    }
+
     public String getTaskStringForStorage() {
         return this.toString();
     }

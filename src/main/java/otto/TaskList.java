@@ -21,7 +21,9 @@ public class TaskList {
             case "event" -> new Event(info[1], info[2], info[3]);
             default -> null;
         };
-        this.taskList.add(newTask);
+        if (newTask != null) {
+            this.taskList.add(newTask);
+        }
         Storage.saveTasks(this.taskList);
         return newTask;
     }

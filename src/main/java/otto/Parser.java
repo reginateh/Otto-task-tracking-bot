@@ -78,7 +78,7 @@ public class Parser {
      * @return A task.
      */
     public static Task parseTasksFromStorage(String taskStr) {
-        Pattern pattern = Pattern.compile("\\[(T|D|E)]\\[( |X)] (.+?)(\\(by: (.+?)\\))?(\\(from: (.+?), to: (.+?)\\))?");
+        Pattern pattern = Pattern.compile("\\[(T|D|E)]\\[( |X)] (.+?)(\\(by: (\\S.+?)\\))?(\\(from: (\\S.+?), to: (\\S.+?)\\))?");
         Matcher matcher = pattern.matcher(taskStr);
 
         if (matcher.matches()) {
@@ -92,8 +92,14 @@ public class Parser {
                 case "T":
                     return new Todo(description, isComplete);
                 case "D":
+                    if (by == null) {
+                        return null;
+                    }
                     return new Deadline(description, by, isComplete);
                 case "E":
+                    if (from == null || to == null) {
+                        return null;
+                    }
                     return new Event(description, from, to, isComplete);
             }
         }

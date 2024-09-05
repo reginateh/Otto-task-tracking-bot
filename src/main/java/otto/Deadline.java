@@ -19,6 +19,9 @@ public class Deadline extends Task {
         this.date = extractDate(by);
     }
 
+    public String getDeadline() {
+        return by;
+    }
     private static LocalDate extractDate(String input) {
         // Regex pattern for yyyy-mm-dd
         Pattern datePattern = Pattern.compile("(\\d{4}-\\d{2}-\\d{2})");

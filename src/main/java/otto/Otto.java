@@ -71,7 +71,7 @@ public class Otto {
      *
      * @param userInput User input.
      */
-    public void handleInput(String userInput) {
+    private void handleInput(String userInput) {
         if (Objects.equals(userInput, "")) {
             return;
         }
