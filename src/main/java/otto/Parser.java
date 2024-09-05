@@ -1,3 +1,5 @@
+package otto;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,6 +71,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses a task stored in the storage file.
+     * Return null if the task doesn't match the format.
+     * @param taskStr Raw string of the task.
+     * @return A task.
+     */
     public static Task parseTasksFromStorage(String taskStr) {
         Pattern pattern = Pattern.compile("\\[(T|D|E)]\\[( |X)] (.+?)(\\(by: (.+?)\\))?(\\(from: (.+?), to: (.+?)\\))?");
         Matcher matcher = pattern.matcher(taskStr);

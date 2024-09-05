@@ -1,3 +1,5 @@
+package otto;
+
 import java.util.ArrayList;
 
 public class TaskList {
@@ -27,7 +29,7 @@ public class TaskList {
     /**
      * Deletes a task from the task list.
      * @param taskIndex Index of the task to be deleted.
-     * @return Task that was deleted.
+     * @return otto.Task that was deleted.
      */
     public Task deleteTask(int taskIndex) {
         Task deleted = this.taskList.remove(taskIndex);
@@ -39,7 +41,7 @@ public class TaskList {
      * Marks a task as complete or incomplete.
      * @param taskIndex Index of the task to be marked.
      * @param status True if task is to be marked as complete, false if incomplete.
-     * @return Task that was marked.
+     * @return otto.Task that was marked.
      */
     public Task markComplete(int taskIndex, boolean status) {
         if (taskIndex >= this.taskList.size()) {

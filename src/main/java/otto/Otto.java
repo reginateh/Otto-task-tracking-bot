@@ -1,3 +1,5 @@
+package otto;
+
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -7,9 +9,9 @@ public class Otto {
     private Ui ui = new Ui();
 
     /**
-     * Constructor for Otto.
-     * Initializes a new TaskList.
-     * Reading from the file is done in the TaskList constructor.
+     * Constructor for otto.Otto.
+     * Initializes a new otto.TaskList.
+     * Reading from the file is done in the otto.TaskList constructor.
      */
     private Otto() {
         this.taskList = new TaskList();

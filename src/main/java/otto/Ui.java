@@ -1,3 +1,5 @@
+package otto;
+
 public class Ui {
     private void printLine() {
         System.out.println(OttoResponses.line.indent(4));
