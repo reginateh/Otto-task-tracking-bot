@@ -1,5 +1,7 @@
 package otto;
 
+import java.util.ArrayList;
+
 /**
  * Contains methods to interact with the user.
  */
@@ -23,12 +25,27 @@ public class Ui {
         this.displayMsg(OttoResponses.bye);
     }
 
-    public void displayTaskList(String taskList) {
-        displayMsg(taskList);
+    /**
+     * Displays the list of tasks.
+     *
+     * @param taskList List of tasks.
+     */
+    public void displayTaskList(TaskList taskList) {
+        displayMsg(OttoResponses.showList + taskList.toString());
+    }
+
+    /**
+     * Displays the list of tasks that match the search query.
+     *
+     * @param findList List of tasks that match the search query.
+     */
+    public void displayFindResult(TaskList findList) {
+        displayMsg(OttoResponses.showFindResults + findList.toString());
     }
 
     /**
      * Displays the message when the user adds a task.
+     *
      * @param newTask Task that is added.
      * @param numOfTasks Number of tasks in the list.
      */
@@ -39,6 +56,7 @@ public class Ui {
 
     /**
      * Displays the message when the user deletes a task.
+     *
      * @param deletedTask Task that is deleted.
      * @param numOfTasks Number of tasks left in the list.
      */
@@ -50,6 +68,7 @@ public class Ui {
 
     /**
      * Displays the message when the user marks a task as complete or incomplete.
+     *
      * @param status True if the task is marked as complete, false otherwise.
      * @param task Task that is marked.
      */

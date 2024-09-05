@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 public class Parser {
     /**
      * Parses the task input by user and returns the task information.
+     *
      * @param type The type of the task. Can be "todo", "deadline" or "event".
      * @param task The task string input by user.
      * @return Array of strings containing the command type and task information.
@@ -25,6 +26,7 @@ public class Parser {
 
     /**
      * Parses Todo task.
+     *
      * @param task The task string input by user.
      * @return Array of strings containing the command type and task information.
      * @throws OttoException If the task doesn't match the format of a todo task.
@@ -42,6 +44,7 @@ public class Parser {
 
     /**
      * Parses Deadline task.
+     *
      * @param task The task string input by user.
      * @return Array of strings containing the command type and task information.
      * @throws OttoException If the task doesn't match the format of a deadline task.
@@ -60,6 +63,7 @@ public class Parser {
 
     /**
      * Parses Event task.
+     *
      * @param task The task string input by user.
      * @return Array of strings containing the command type and task information.
      * @throws OttoException If the task doesn't match the format of an event task.
@@ -79,6 +83,7 @@ public class Parser {
 
     /**
      * Parses the index of mark and unmark commands.
+     *
      * @param command Array of strings containing the command and index.
      * @return Index of the task to be marked.
      * @throws OttoException If the command contains a non-integer index or doesn't contain an index.
@@ -96,6 +101,7 @@ public class Parser {
 
     /**
      * Parses the index of delete command.
+     *
      * @param command Array of strings containing the command and index.
      * @return Index of the task to be deleted.
      * @throws OttoException If the command contains a non-integer index or doesn't contain an index.
@@ -109,6 +115,22 @@ public class Parser {
         } catch (NumberFormatException e) {
             throw new OttoException(OttoResponses.indexError);
         }
+    }
+
+    /**
+     * Parses the keyword of find command.
+     *
+     * @param task The task string input by user.
+     * @return Keyword to be searched.
+     * @throws OttoException If the task doesn't match the format of a find task.
+     */
+    public static String parseFindTask(String task) throws OttoException {
+        Pattern pattern = Pattern.compile("find (\\S.*)", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(task);
+        if (matcher.matches()) {
+            return matcher.group(1);
+        }
+        throw new OttoException(OttoResponses.findError);
     }
 
     /**

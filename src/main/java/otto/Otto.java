@@ -115,7 +115,7 @@ public class Otto {
         try {
             switch (command[0].toLowerCase()) {
             case "list":
-                ui.displayTaskList(this.taskList.toString());
+                ui.displayTaskList(this.taskList);
                 break;
             case "mark":
                 this.markComplete(Parser.parseMarkComplete(command), true);
@@ -130,6 +130,9 @@ public class Otto {
                 break;
             case "delete":
                 this.deleteTask(Parser.parseDeleteTask(command));
+                break;
+            case "find":
+                ui.displayFindResult(this.taskList.findTasks(Parser.parseFindTask(userInput)));
                 break;
             default:
                 throw new OttoException(OttoResponses.unknownCommandError);

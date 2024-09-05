@@ -10,6 +10,7 @@ public class TaskList {
 
     /**
      * Create a task list with an existing ArrayList of tasks.
+     *
      * @param taskList ArrayList of tasks.
      */
     public TaskList(ArrayList<Task> taskList) {
@@ -78,9 +79,25 @@ public class TaskList {
         return this.taskList.size();
     }
 
+    /**
+     * Finds tasks that contain the keyword.
+     *
+     * @param keyword Keyword to search for in the task descriptions.
+     * @return TaskList containing tasks that contain the keyword.
+     */
+    public TaskList findTasks(String keyword) {
+        ArrayList<Task> foundTasks = new ArrayList<>();
+        for (Task task : taskList) {
+            if (task.getDescription().contains(keyword)) {
+                foundTasks.add(task);
+            }
+        }
+        return new TaskList(foundTasks);
+    }
+
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder(OttoResponses.showList);
+        StringBuilder res = new StringBuilder();
         int idx = 1;
         for (Task task : taskList) {
             res.append(String.format("\n%d. %s", idx++, task.toString()));
