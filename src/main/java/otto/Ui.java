@@ -41,6 +41,7 @@ public class Ui {
                 : OttoResponses.incomplete)
                 + task.toString());
     }
+
     public void displayErrorMsg(Exception e) {
         this.displayMsg(e.getMessage());
     }

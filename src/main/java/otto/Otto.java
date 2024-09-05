@@ -78,25 +78,25 @@ public class Otto {
         String[] command = userInput.split("\\s+", 2);
         try {
             switch (command[0].toLowerCase()) {
-                case "list":
-                    ui.displayTaskList(this.taskList.toString());
-                    break;
-                case "mark":
-                    this.markComplete(Parser.parseMarkComplete(command), true);
-                    break;
-                case "unmark":
-                    this.markComplete(Parser.parseMarkComplete(command), false);
-                    break;
-                case "todo":
-                case "deadline":
-                case "event":
-                    this.addTask(Parser.parseTask(command[0].toLowerCase(), userInput));
-                    break;
-                case "delete":
-                    this.deleteTask(Parser.parseDeleteTask(command));
-                    break;
-                default:
-                    throw new OttoException(OttoResponses.unknownCommandError);
+            case "list":
+                ui.displayTaskList(this.taskList.toString());
+                break;
+            case "mark":
+                this.markComplete(Parser.parseMarkComplete(command), true);
+                break;
+            case "unmark":
+                this.markComplete(Parser.parseMarkComplete(command), false);
+                break;
+            case "todo":
+            case "deadline":
+            case "event":
+                this.addTask(Parser.parseTask(command[0].toLowerCase(), userInput));
+                break;
+            case "delete":
+                this.deleteTask(Parser.parseDeleteTask(command));
+                break;
+            default:
+                throw new OttoException(OttoResponses.unknownCommandError);
             }
         } catch (OttoException e) {
             ui.displayErrorMsg(e);

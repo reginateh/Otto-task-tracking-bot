@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
-    /** Paths of directory and file. */
+    /**
+     * Paths of directory and file.
+     */
     private static final String DIRECTORY_PATH = "./data";
     private static final String FILE_PATH = DIRECTORY_PATH + "/tasks.txt";
 
