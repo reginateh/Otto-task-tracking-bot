@@ -22,7 +22,7 @@ public final class OttoResponses {
     public static final String bye = "Otto is signing off now. Don't wake him up again.";
     public static final String addTask = "More work? Otto has noted it down, but he'd much rather be sleeping.\n";
     public static final String numOfTasks = "\nNow you have %d task(s) in the list.";
-    public static final String deleteTask = "Finally, something Otto can get behind— deleting a task. It's gone now, just like Otto wishes he could be... back to his nap.\n";
+    public static final String deleteTask = "Finally, something Otto can get behind: deleting a task. It's gone now, just like Otto wishes he could be... back to his nap.\n";
     public static final String complete = "Well, finally. You finished something.\n";
     public static final String incomplete = "So you didn't finish that task. Try to get it done so Otto can rest easy.\n";
     public static final String showList = "Here are the tasks in your list. Otto would rather be asleep than dealing with all this.";
@@ -37,7 +37,7 @@ public final class OttoResponses {
     public static final String eventError = "The format for event is wrong. Missing description, start time or end time.";
     public static final String deadlineError = "The format for deadline is wrong. Missing description or deadline.";
     public static final String todoError = "Todo must contain a description.";
-    public static final String createFileError = "Great, just what Otto needed— an error while creating your storage file. Try again by modifying the tasks.";
-    public static final String saveFileError = "Great, just what Otto needed— an error while saving your tasks. Try again by modifying the tasks.";
-    public static final String loadFileError = "Great, just what Otto needed— an error while loading your tasks. Your previous tasks are gone.";
+    public static final String createFileError = "Great, just what Otto needed: an error while creating your storage file. Try again by modifying the tasks.";
+    public static final String saveFileError = "Great, just what Otto needed: an error while saving your tasks. Try again by modifying the tasks.";
+    public static final String loadFileError = "Great, just what Otto needed: an error while loading your tasks. Your previous tasks are gone.";
 }
