@@ -1,3 +1,5 @@
+package otto;
+
 public final class OttoResponses {
     private OttoResponses() {
     }

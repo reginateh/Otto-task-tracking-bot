@@ -1,3 +1,5 @@
+package otto;
+
 public class OttoException extends Exception {
     private String msg;
 
