@@ -5,35 +5,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
+    /** Paths of directory and file. */
     private static final String DIRECTORY_PATH = "./data";
     private static final String FILE_PATH = DIRECTORY_PATH + "/tasks.txt";
 
-    private static void createDataDirectory() {
-        File directory = new File(DIRECTORY_PATH);
-        if (!directory.exists()) {
-            boolean created = directory.mkdirs();
-            if (created) {
-                System.out.println("Directory " + DIRECTORY_PATH + " created.");
-            } else {
-                System.out.println("Failed to create directory " + DIRECTORY_PATH);
-            }
-        }
-    }
-
-    private static void createDataFile() {
-        File file = new File(FILE_PATH);
-        try {
-            boolean created = file.createNewFile();
-            if (created) {
-                System.out.println("File " + FILE_PATH + " created.");
-            } else {
-                System.out.println("File " + FILE_PATH + " already exists.");
-            }
-        } catch (IOException e) {
-            System.out.println("Failed to create file " + FILE_PATH);
-        }
-    }
-
+    /**
+     * Checks if the target directory and file exist.
+     * If not, create them.
+     */
     private static void checkAndCreateFile() {
         File directory = new File(DIRECTORY_PATH);
         File file = new File(FILE_PATH);
@@ -41,24 +20,18 @@ public class Storage {
         try {
             // Check if the directory exists, if not create it
             if (!directory.exists()) {
-                if (directory.mkdirs()) {
-                    System.out.println("Directory " + DIRECTORY_PATH + " created.");
-                } else {
-                    System.out.println("Failed to create directory " + DIRECTORY_PATH);
+                if (!directory.mkdirs()) {
                     return;
                 }
             }
 
             // Check if the file exists, if not create it
             if (!file.exists()) {
-                if (file.createNewFile()) {
-                    System.out.println("File " + FILE_PATH + " created.");
-                } else {
-                    System.out.println("Failed to create file " + FILE_PATH);
-                }
+                file.createNewFile();
             }
         } catch (IOException e) {
-            System.out.println("An error occurred while creating the file: " + e.getMessage());
+            Otto.getInstance().getUi()
+                    .displayErrorMsg(new OttoException(OttoResponses.createFileError));
         }
     }
 
@@ -80,7 +53,8 @@ public class Storage {
             sc.close();
             return tasks;
         } catch (IOException e) {
-            System.out.println("An error occurred while loading tasks: " + e.getMessage());
+            Otto.getInstance().getUi()
+                    .displayErrorMsg(new OttoException(OttoResponses.loadFileError));
             return new ArrayList<>();
         }
     }
@@ -94,7 +68,8 @@ public class Storage {
             }
             fw.close();
         } catch (IOException e) {
-            System.out.println("An error occurred while saving tasks: " + e.getMessage());
+            Otto.getInstance().getUi()
+                    .displayErrorMsg(new OttoException(OttoResponses.saveFileError));
         }
     }
 }
