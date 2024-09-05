@@ -114,6 +114,7 @@ public class Parser {
     /**
      * Parses task stored in the storage file.
      * Return null if the task doesn't match the format.
+     *
      * @param taskStr Raw string of the task.
      * @return A task.
      */
@@ -129,18 +130,18 @@ public class Parser {
             String from = matcher.group(7);
             String to = matcher.group(8);
             switch (type) {
-                case "T":
-                    return new Todo(description, isComplete);
-                case "D":
-                    if (by == null) {
-                        return null;
-                    }
-                    return new Deadline(description, by, isComplete);
-                case "E":
-                    if (from == null || to == null) {
-                        return null;
-                    }
-                    return new Event(description, from, to, isComplete);
+            case "T":
+                return new Todo(description, isComplete);
+            case "D":
+                if (by == null) {
+                    return null;
+                }
+                return new Deadline(description, by, isComplete);
+            case "E":
+                if (from == null || to == null) {
+                    return null;
+                }
+                return new Event(description, from, to, isComplete);
             }
         }
         return null;

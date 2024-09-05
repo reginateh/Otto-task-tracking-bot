@@ -25,6 +25,7 @@ public class TaskList {
 
     /**
      * Creates a new task and adds it to the task list.
+     *
      * @param info Array of strings containing task information.
      */
     public Task addTask(String[] info) {
@@ -44,6 +45,7 @@ public class TaskList {
 
     /**
      * Deletes a task from the task list.
+     *
      * @param taskIndex Index of the task to be deleted (0-indexed).
      * @return Task that was deleted.
      */
@@ -55,8 +57,9 @@ public class TaskList {
 
     /**
      * Marks a task as complete or incomplete.
+     *
      * @param taskIndex Index of the task to be marked (0-indexed).
-     * @param status True if task is to be marked as complete, false if incomplete.
+     * @param status    True if task is to be marked as complete, false if incomplete.
      * @return Task that was marked.
      */
     public Task markComplete(int taskIndex, boolean status) {

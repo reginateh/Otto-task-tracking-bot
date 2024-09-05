@@ -41,6 +41,7 @@ public class Deadline extends Task {
 
     /**
      * Extracts the date from the deadline string.
+     *
      * @param input Deadline string.
      * @return LocalDate object if the deadline contains a valid date, null otherwise.
      */
