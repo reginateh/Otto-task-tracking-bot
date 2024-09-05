@@ -3,8 +3,11 @@ abstract public class Task {
     private boolean isComplete;
 
     public Task(String description) {
+        this(description, false);
+    }
+    public Task(String description, boolean isComplete) {
         this.description = description;
-        this.isComplete = false;
+        this.isComplete = isComplete;
     }
 
     public Task setComplete(boolean status) {

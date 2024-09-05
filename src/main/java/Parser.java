@@ -7,7 +7,7 @@ public class Parser {
             case "todo" -> parseTodoTask(task);
             case "deadline" -> parseDeadlineTask(task);
             case "event" -> parseEventTask(task);
-            default -> throw new OttoException(OttoResponses.unknown);
+            default -> throw new OttoException(OttoResponses.unknownCommandError);
         };
     }
 
@@ -67,5 +67,28 @@ public class Parser {
         } catch (NumberFormatException e) {
             throw new OttoException(OttoResponses.indexError);
         }
+    }
+
+    public static Task parseTasksFromStorage(String taskStr) {
+        Pattern pattern = Pattern.compile("\\[(T|D|E)]\\[( |X)] (.+?)(\\(by: (.+?)\\))?(\\(from: (.+?), to: (.+?)\\))?");
+        Matcher matcher = pattern.matcher(taskStr);
+
+        if (matcher.matches()) {
+            String type = matcher.group(1);
+            boolean isComplete = matcher.group(2).equals("X");
+            String description = matcher.group(3).trim();
+            String by = matcher.group(5);
+            String from = matcher.group(7);
+            String to = matcher.group(8);
+            switch (type) {
+                case "T":
+                    return new Todo(description, isComplete);
+                case "D":
+                    return new Deadline(description, by, isComplete);
+                case "E":
+                    return new Event(description, from, to, isComplete);
+            }
+        }
+        return null;
     }
 }

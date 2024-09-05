@@ -2,6 +2,9 @@ public class Todo extends Task {
     public Todo(String description) {
         super(description);
     }
+    public Todo(String description, boolean isComplete) {
+        super(description, isComplete);
+    }
 
     @Override
     public String toString() {
