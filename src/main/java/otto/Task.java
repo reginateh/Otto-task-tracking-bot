@@ -1,13 +1,26 @@
 package otto;
 
+/**
+ * Represents a task.
+ */
 abstract public class Task {
     private String description;
     private boolean isComplete;
 
+    /**
+     * Creates a new task.
+     * Default is incomplete.
+     * @param description Description of the task.
+     */
     public Task(String description) {
         this(description, false);
     }
 
+    /**
+     * Creates a new task.
+     * @param description Description of the task.
+     * @param isComplete True if task is complete, false if incomplete.
+     */
     public Task(String description, boolean isComplete) {
         this.description = description;
         this.isComplete = isComplete;

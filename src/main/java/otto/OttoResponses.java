@@ -1,5 +1,8 @@
 package otto;
 
+/**
+ * Contains all the responses that Otto will give to the user.
+ */
 public final class OttoResponses {
     private OttoResponses() {
     }

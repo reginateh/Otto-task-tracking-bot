@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Contains methods to load and save tasks from storage.
+ */
 public class Storage {
     /** Paths of directory and file. */
     private static final String DIRECTORY_PATH = "./data";
@@ -37,6 +40,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from storage.
+     * If file does not exist or any error occurs, return an empty ArrayList.
+     * @return ArrayList of tasks loaded from storage.
+     */
     public static ArrayList<Task> loadTasks() {
         File file = new File(FILE_PATH);
         if (!file.exists()) {
@@ -61,6 +69,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves tasks to storage.
+     * @param tasks ArrayList of tasks to be saved.
+     */
     public static void saveTasks(ArrayList<Task> tasks) {
         try {
             checkAndCreateFile();

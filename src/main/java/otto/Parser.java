@@ -3,7 +3,17 @@ package otto;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Parses user input and tasks from storage.
+ */
 public class Parser {
+    /**
+     * Parses the task input by user and returns the task information.
+     * @param type The type of the task. Can be "todo", "deadline" or "event".
+     * @param task The task string input by user.
+     * @return Array of strings containing the command type and task information.
+     * @throws OttoException If the type doesn't match any of the 3 options.
+     */
     public static String[] parseTask(String type, String task) throws OttoException {
         return switch (type) {
             case "todo" -> parseTodoTask(task);
@@ -13,6 +23,12 @@ public class Parser {
         };
     }
 
+    /**
+     * Parses Todo task.
+     * @param task The task string input by user.
+     * @return Array of strings containing the command type and task information.
+     * @throws OttoException If the task doesn't match the format of a todo task.
+     */
     private static String[] parseTodoTask(String task) throws OttoException {
         Pattern pattern = Pattern.compile("todo (\\S.*)", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(task);
@@ -24,6 +40,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses Deadline task.
+     * @param task The task string input by user.
+     * @return Array of strings containing the command type and task information.
+     * @throws OttoException If the task doesn't match the format of a deadline task.
+     */
     private static String[] parseDeadlineTask(String task) throws OttoException {
         Pattern pattern = Pattern.compile("deadline (\\S.*) /by (\\S.*)", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(task);
@@ -36,6 +58,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses Event task.
+     * @param task The task string input by user.
+     * @return Array of strings containing the command type and task information.
+     * @throws OttoException If the task doesn't match the format of an event task.
+     */
     private static String[] parseEventTask(String task) throws OttoException {
         Pattern pattern = Pattern.compile("event (\\S.*) /from (\\S.*) /to (\\S.*)", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(task);
@@ -49,6 +77,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses the index of mark and unmark commands.
+     * @param command Array of strings containing the command and index.
+     * @return Index of the task to be marked.
+     * @throws OttoException If the command contains a non-integer index or doesn't contain an index.
+     */
     public static int parseMarkComplete(String[] command) throws OttoException {
         if (command.length <= 1) {
             throw new OttoException(OttoResponses.markError);
@@ -60,6 +94,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses the index of delete command.
+     * @param command Array of strings containing the command and index.
+     * @return Index of the task to be deleted.
+     * @throws OttoException If the command contains a non-integer index or doesn't contain an index.
+     */
     public static int parseDeleteTask(String[] command) throws OttoException {
         if (command.length <= 1) {
             throw new OttoException(OttoResponses.deleteError);
@@ -72,7 +112,7 @@ public class Parser {
     }
 
     /**
-     * Parses a task stored in the storage file.
+     * Parses task stored in the storage file.
      * Return null if the task doesn't match the format.
      * @param taskStr Raw string of the task.
      * @return A task.

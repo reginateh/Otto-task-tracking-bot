@@ -2,13 +2,23 @@ package otto;
 
 import java.util.ArrayList;
 
+/**
+ * Contains a list of tasks and methods to manipulate the list.
+ */
 public class TaskList {
     private ArrayList<Task> taskList;
 
+    /**
+     * Create a task list with an existing ArrayList of tasks.
+     * @param taskList ArrayList of tasks.
+     */
     public TaskList(ArrayList<Task> taskList) {
         this.taskList = taskList;
     }
 
+    /**
+     * Create an empty task list.
+     */
     public TaskList() {
         this.taskList = new ArrayList<>();
     }
