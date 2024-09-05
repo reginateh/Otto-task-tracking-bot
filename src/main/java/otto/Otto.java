@@ -14,7 +14,7 @@ public class Otto {
      * Reading from the file is done in the otto.TaskList constructor.
      */
     private Otto() {
-        this.taskList = new TaskList();
+        this.taskList = new TaskList(Storage.loadTasks());
     }
 
     public static Otto getInstance() {

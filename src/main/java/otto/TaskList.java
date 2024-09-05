@@ -5,8 +5,12 @@ import java.util.ArrayList;
 public class TaskList {
     private ArrayList<Task> taskList;
 
+    public TaskList(ArrayList<Task> taskList) {
+        this.taskList = taskList;
+    }
+
     public TaskList() {
-        this.taskList = Storage.loadTasks();
+        this.taskList = new ArrayList<>();
     }
 
     /**
@@ -30,8 +34,8 @@ public class TaskList {
 
     /**
      * Deletes a task from the task list.
-     * @param taskIndex Index of the task to be deleted.
-     * @return otto.Task that was deleted.
+     * @param taskIndex Index of the task to be deleted (0-indexed).
+     * @return Task that was deleted.
      */
     public Task deleteTask(int taskIndex) {
         Task deleted = this.taskList.remove(taskIndex);
@@ -41,9 +45,9 @@ public class TaskList {
 
     /**
      * Marks a task as complete or incomplete.
-     * @param taskIndex Index of the task to be marked.
+     * @param taskIndex Index of the task to be marked (0-indexed).
      * @param status True if task is to be marked as complete, false if incomplete.
-     * @return otto.Task that was marked.
+     * @return Task that was marked.
      */
     public Task markComplete(int taskIndex, boolean status) {
         if (taskIndex >= this.taskList.size()) {
