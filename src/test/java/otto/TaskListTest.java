@@ -102,8 +102,7 @@ public class TaskListTest {
         taskList.addTask(info1);
         taskList.addTask(info2);
 
-        String expected = OttoResponses.showList +
-                "\n1. [T][ ] Buy milk" +
+        String expected = "\n1. [T][ ] Buy milk" +
                 "\n2. [D][ ] Submit assignment (by: tomorrow)";
         assertEquals(expected, taskList.toString(), "TaskList string representation should match");
     }

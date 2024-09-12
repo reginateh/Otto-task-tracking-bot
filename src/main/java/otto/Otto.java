@@ -43,31 +43,13 @@ public class Otto {
     }
 
     /**
-     * Runs the program.
-     * Displays the welcome message and takes in user input.
-     */
-    private void run() {
-        ui.intro();
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            String userInput = scanner.nextLine();
-            if (userInput.equalsIgnoreCase("bye")) {
-                break;
-            } else {
-                handleInput(userInput);
-            }
-        }
-        ui.exit();
-    }
-
-    /**
      * Adds a task to the task list.
      *
      * @param info Array of strings containing task information.
      */
-    private void addTask(String[] info) {
+    private String addTask(String[] info) {
         Task newTask = this.taskList.addTask(info);
-        ui.displayAddedTask(newTask, taskList.getNumOfTasks());
+        return ui.displayAddedTask(newTask, taskList.getNumOfTasks());
     }
 
     /**
@@ -76,10 +58,10 @@ public class Otto {
      * @param index Index of the task to be deleted.
      * @throws OttoException If the index is out of bounds.
      */
-    private void deleteTask(int index) throws OttoException {
+    private String deleteTask(int index) throws OttoException {
         try {
             Task deletedTask = this.taskList.deleteTask(index - 1);
-            ui.displayDeletedTask(deletedTask, taskList.getNumOfTasks());
+            return ui.displayDeletedTask(deletedTask, taskList.getNumOfTasks());
         } catch (IndexOutOfBoundsException e) {
             throw new OttoException(OttoResponses.indexError);
         }
@@ -92,10 +74,10 @@ public class Otto {
      * @param status True if task is to be marked as complete, false if incomplete.
      * @throws OttoException If the index is out of bounds.
      */
-    private void markComplete(int index, boolean status) throws OttoException {
+    private String markComplete(int index, boolean status) throws OttoException {
         try {
             Task task = this.taskList.markComplete(index - 1, status);
-            ui.displayMarkedTask(status, task);
+            return ui.displayMarkedTask(status, task);
         } catch (IndexOutOfBoundsException e) {
             throw new OttoException(OttoResponses.indexError);
         }
@@ -107,48 +89,23 @@ public class Otto {
      *
      * @param userInput User input.
      */
-    private void handleInput(String userInput) {
+    public String handleInput(String userInput) {
         if (Objects.equals(userInput, "")) {
-            return;
+            return "";
         }
         String[] command = userInput.split("\\s+", 2);
         try {
-            switch (command[0].toLowerCase()) {
-            case "list":
-                ui.displayTaskList(this.taskList);
-                break;
-            case "mark":
-                this.markComplete(Parser.parseMarkComplete(command), true);
-                break;
-            case "unmark":
-                this.markComplete(Parser.parseMarkComplete(command), false);
-                break;
-            case "todo":
-            case "deadline":
-            case "event":
-                this.addTask(Parser.parseTask(command[0].toLowerCase(), userInput));
-                break;
-            case "delete":
-                this.deleteTask(Parser.parseDeleteTask(command));
-                break;
-            case "find":
-                ui.displayFindResult(this.taskList.findTasks(Parser.parseFindTask(userInput)));
-                break;
-            default:
-                throw new OttoException(OttoResponses.unknownCommandError);
-            }
+            return switch (command[0].toLowerCase()) {
+                case "list" -> ui.displayTaskList(this.taskList);
+                case "mark" -> this.markComplete(Parser.parseMarkComplete(command), true);
+                case "unmark" -> this.markComplete(Parser.parseMarkComplete(command), false);
+                case "todo", "deadline", "event" -> this.addTask(Parser.parseTask(command[0].toLowerCase(), userInput));
+                case "delete" -> this.deleteTask(Parser.parseDeleteTask(command));
+                case "find" -> ui.displayFindResult(this.taskList.findTasks(Parser.parseFindTask(userInput)));
+                default -> throw new OttoException(OttoResponses.unknownCommandError);
+            };
         } catch (OttoException e) {
-            ui.displayErrorMsg(e);
+            return ui.displayErrorMsg(e);
         }
-    }
-
-    /**
-     * Main method to run the program.
-     *
-     * @param args Command line arguments.
-     */
-    public static void main(String[] args) {
-        Otto instance = new Otto();
-        instance.run();
     }
 }
