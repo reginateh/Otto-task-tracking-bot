@@ -32,10 +32,14 @@ public class Storage {
                 }
             }
 
+            assert directory.exists() : "Directory creation failed!";
+
             // Check if the file exists, if not create it
             if (!file.exists()) {
                 file.createNewFile();
             }
+
+            assert file.exists() : "File creation failed!";
         } catch (IOException e) {
             Otto.getInstance().getUi()
                     .displayErrorMsg(new OttoException(OttoResponses.createFileError));
@@ -58,6 +62,9 @@ public class Storage {
             while (sc.hasNextLine()) {
                 String s = sc.nextLine();
                 Task newTask = Parser.parseTasksFromStorage(s);
+
+                assert newTask != null : "Parsed task is null!";
+
                 if (newTask != null) {
                     tasks.add(newTask);
                 }
@@ -76,6 +83,8 @@ public class Storage {
      * @param tasks ArrayList of tasks to be saved.
      */
     public static void saveTasks(ArrayList<Task> tasks) {
+        assert tasks != null : "Tasks list cannot be null!";
+
         try {
             checkAndCreateFile();
             FileWriter fw = new FileWriter(FILE_PATH);
@@ -83,6 +92,8 @@ public class Storage {
                 fw.write(task.getTaskStringForStorage() + "\n");
             }
             fw.close();
+
+            assert new File(FILE_PATH).exists() : "File write operation failed!";
         } catch (IOException e) {
             Otto.getInstance().getUi()
                     .displayErrorMsg(new OttoException(OttoResponses.saveFileError));
