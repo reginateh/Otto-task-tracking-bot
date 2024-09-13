@@ -48,6 +48,8 @@ public class Otto {
      * @param info Array of strings containing task information.
      */
     private String addTask(String[] info) {
+        assert info != null && info.length > 0 : "Invalid task information!";
+
         Task newTask = this.taskList.addTask(info);
         return ui.displayAddedTask(newTask, taskList.getNumOfTasks());
     }
@@ -55,10 +57,12 @@ public class Otto {
     /**
      * Deletes a task from the task list.
      *
-     * @param index Index of the task to be deleted.
+     * @param index Index of the task to be deleted (1-indexed).
      * @throws OttoException If the index is out of bounds.
      */
     private String deleteTask(int index) throws OttoException {
+        assert index > 0 && index <= taskList.getNumOfTasks() : "Index out of bounds!";
+
         try {
             Task deletedTask = this.taskList.deleteTask(index - 1);
             return ui.displayDeletedTask(deletedTask, taskList.getNumOfTasks());
@@ -75,6 +79,8 @@ public class Otto {
      * @throws OttoException If the index is out of bounds.
      */
     private String markComplete(int index, boolean status) throws OttoException {
+        assert index > 0 && index <= taskList.getNumOfTasks() : "Invalid index for marking task!";
+
         try {
             Task task = this.taskList.markComplete(index - 1, status);
             return ui.displayMarkedTask(status, task);
@@ -90,6 +96,8 @@ public class Otto {
      * @param userInput User input.
      */
     public String handleInput(String userInput) {
+        assert userInput != null : "User input is null!";
+
         if (Objects.equals(userInput, "")) {
             return "";
         }

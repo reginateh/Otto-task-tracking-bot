@@ -14,6 +14,8 @@ public class TaskList {
      * @param taskList ArrayList of tasks.
      */
     public TaskList(ArrayList<Task> taskList) {
+        assert taskList != null : "TaskList cannot be null";
+
         this.taskList = taskList;
     }
 
@@ -51,6 +53,8 @@ public class TaskList {
      * @return Task that was deleted.
      */
     public Task deleteTask(int taskIndex) {
+        assert taskIndex >= 0 && taskIndex < this.taskList.size() : "Task index out of bounds!";
+
         Task deleted = this.taskList.remove(taskIndex);
         Storage.saveTasks(this.taskList);
         return deleted;
@@ -64,6 +68,8 @@ public class TaskList {
      * @return Task that was marked.
      */
     public Task markComplete(int taskIndex, boolean status) {
+        assert taskIndex >= 0 && taskIndex < this.taskList.size() : "Task index out of bounds!";
+
         if (taskIndex >= this.taskList.size()) {
             throw new IndexOutOfBoundsException();
         }
@@ -86,6 +92,8 @@ public class TaskList {
      * @return TaskList containing tasks that contain the keyword.
      */
     public TaskList findTasks(String keyword) {
+        assert keyword != null && !keyword.isEmpty() : "Keyword cannot be null or empty!";
+
         ArrayList<Task> foundTasks = new ArrayList<>();
         for (Task task : taskList) {
             if (task.getDescription().contains(keyword)) {
