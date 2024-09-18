@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
  * Parses user input and tasks from storage.
  */
 public class Parser {
+    public static final String STORAGE_TASK_PATTERN = "\\[(T|D|E)]\\[( |X)] (.+?)(\\(by: (\\S.+?)\\))?(\\(from: (\\S.+?), to: (\\S.+?)\\))?";
     /**
      * Parses the task input by user and returns the task information.
      *
@@ -141,7 +142,7 @@ public class Parser {
      * @return A task.
      */
     public static Task parseTasksFromStorage(String taskStr) {
-        Pattern pattern = Pattern.compile("\\[(T|D|E)]\\[( |X)] (.+?)(\\(by: (\\S.+?)\\))?(\\(from: (\\S.+?), to: (\\S.+?)\\))?");
+        Pattern pattern = Pattern.compile(STORAGE_TASK_PATTERN);
         Matcher matcher = pattern.matcher(taskStr);
 
         if (matcher.matches()) {
@@ -155,15 +156,9 @@ public class Parser {
             case "T":
                 return new Todo(description, isComplete);
             case "D":
-                if (by == null) {
-                    return null;
-                }
-                return new Deadline(description, by, isComplete);
+                return by == null ? null : new Deadline(description, by, isComplete);
             case "E":
-                if (from == null || to == null) {
-                    return null;
-                }
-                return new Event(description, from, to, isComplete);
+                return (from == null || to == null) ? null : new Event(description, from, to, isComplete);
             }
         }
         return null;

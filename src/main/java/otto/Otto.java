@@ -1,7 +1,6 @@
 package otto;
 
 import java.util.Objects;
-import java.util.Scanner;
 
 /**
  * Main class for the Otto program.

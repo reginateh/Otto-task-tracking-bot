@@ -1,7 +1,5 @@
 package otto;
 
-import java.util.ArrayList;
-
 /**
  * Contains methods to interact with the user.
  */
