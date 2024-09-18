@@ -38,7 +38,7 @@ public class Storage {
             }
         } catch (IOException e) {
             Otto.getInstance().getUi()
-                    .displayErrorMsg(new OttoException(OttoResponses.createFileError));
+                    .displayErrorMsg(new OttoException(OttoResponses.CREATE_FILE_ERROR));
         }
     }
 
@@ -66,7 +66,7 @@ public class Storage {
             return tasks;
         } catch (IOException e) {
             Otto.getInstance().getUi()
-                    .displayErrorMsg(new OttoException(OttoResponses.loadFileError));
+                    .displayErrorMsg(new OttoException(OttoResponses.LOAD_FILE_ERROR));
             return new ArrayList<>();
         }
     }
@@ -85,7 +85,7 @@ public class Storage {
             fw.close();
         } catch (IOException e) {
             Otto.getInstance().getUi()
-                    .displayErrorMsg(new OttoException(OttoResponses.saveFileError));
+                    .displayErrorMsg(new OttoException(OttoResponses.SAVE_FILE_ERROR));
         }
     }
 }

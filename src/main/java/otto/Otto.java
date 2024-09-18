@@ -62,7 +62,7 @@ public class Otto {
             Task deletedTask = this.taskList.deleteTask(index - 1);
             return ui.displayDeletedTask(deletedTask, taskList.getNumOfTasks());
         } catch (IndexOutOfBoundsException e) {
-            throw new OttoException(OttoResponses.indexError);
+            throw new OttoException(OttoResponses.INDEX_ERROR);
         }
     }
 
@@ -78,7 +78,7 @@ public class Otto {
             Task task = this.taskList.markComplete(index - 1, status);
             return ui.displayMarkedTask(status, task);
         } catch (IndexOutOfBoundsException e) {
-            throw new OttoException(OttoResponses.indexError);
+            throw new OttoException(OttoResponses.INDEX_ERROR);
         }
     }
 
@@ -101,7 +101,7 @@ public class Otto {
                 case "todo", "deadline", "event" -> this.addTask(Parser.parseTask(command[0].toLowerCase(), userInput));
                 case "delete" -> this.deleteTask(Parser.parseDeleteTask(command));
                 case "find" -> ui.displayFindResult(this.taskList.findTasks(Parser.parseFindTask(userInput)));
-                default -> throw new OttoException(OttoResponses.unknownCommandError);
+                default -> throw new OttoException(OttoResponses.UNKNOWN_COMMAND_ERROR);
             };
         } catch (OttoException e) {
             return ui.displayErrorMsg(e);

@@ -21,7 +21,7 @@ public class Parser {
             case "todo" -> parseTodoTask(task);
             case "deadline" -> parseDeadlineTask(task);
             case "event" -> parseEventTask(task);
-            default -> throw new OttoException(OttoResponses.unknownCommandError);
+            default -> throw new OttoException(OttoResponses.UNKNOWN_COMMAND_ERROR);
         };
     }
 
@@ -39,7 +39,7 @@ public class Parser {
             String description = matcher.group(1);
             return new String[]{"todo", description};
         } else {
-            throw new OttoException(OttoResponses.todoError);
+            throw new OttoException(OttoResponses.TODO_ERROR);
         }
     }
 
@@ -58,7 +58,7 @@ public class Parser {
             String deadline = matcher.group(2);
             return new String[]{"deadline", description, deadline};
         } else {
-            throw new OttoException(OttoResponses.deadlineError);
+            throw new OttoException(OttoResponses.DEADLINE_ERROR);
         }
     }
 
@@ -78,7 +78,7 @@ public class Parser {
             String to = matcher.group(3);
             return new String[]{"event", description, from, to};
         } else {
-            throw new OttoException(OttoResponses.eventError);
+            throw new OttoException(OttoResponses.EVENT_ERROR);
         }
     }
 
@@ -91,12 +91,12 @@ public class Parser {
      */
     public static int parseMarkComplete(String[] command) throws OttoException {
         if (command.length <= 1) {
-            throw new OttoException(OttoResponses.markError);
+            throw new OttoException(OttoResponses.MARK_ERROR);
         }
         try {
             return Integer.parseInt(command[1]);
         } catch (NumberFormatException e) {
-            throw new OttoException(OttoResponses.indexError);
+            throw new OttoException(OttoResponses.INDEX_ERROR);
         }
     }
 
@@ -109,12 +109,12 @@ public class Parser {
      */
     public static int parseDeleteTask(String[] command) throws OttoException {
         if (command.length <= 1) {
-            throw new OttoException(OttoResponses.deleteError);
+            throw new OttoException(OttoResponses.DELETE_ERROR);
         }
         try {
             return Integer.parseInt(command[1]);
         } catch (NumberFormatException e) {
-            throw new OttoException(OttoResponses.indexError);
+            throw new OttoException(OttoResponses.INDEX_ERROR);
         }
     }
 
@@ -131,7 +131,7 @@ public class Parser {
         if (matcher.matches()) {
             return matcher.group(1);
         }
-        throw new OttoException(OttoResponses.findError);
+        throw new OttoException(OttoResponses.FIND_ERROR);
     }
 
     /**

@@ -42,7 +42,7 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     public void intro() {
-        String response = OttoResponses.intro;
+        String response = OttoResponses.INTRO;
         dialogContainer.getChildren().addAll(
                 DialogBox.getOttoDialog(response, ottoImage)
         );
