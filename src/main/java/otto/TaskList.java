@@ -9,7 +9,7 @@ public class TaskList {
     private ArrayList<Task> taskList;
 
     /**
-     * Create a task list with an existing ArrayList of tasks.
+     * Creates a task list with an existing ArrayList of tasks.
      *
      * @param taskList ArrayList of tasks.
      */
@@ -20,7 +20,7 @@ public class TaskList {
     }
 
     /**
-     * Create an empty task list.
+     * Creates an empty task list.
      */
     public TaskList() {
         this.taskList = new ArrayList<>();

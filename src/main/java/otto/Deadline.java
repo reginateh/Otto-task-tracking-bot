@@ -1,9 +1,6 @@
 package otto;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Represents a deadline task.
@@ -32,7 +29,7 @@ public class Deadline extends Task {
     public Deadline(String description, String by, boolean isComplete) {
         super(description, isComplete);
         this.by = by;
-        this.date = extractDate(by);
+        this.date = DateUtils.extractDate(by);
     }
 
     public String getDeadline() {
@@ -40,33 +37,11 @@ public class Deadline extends Task {
     }
 
     /**
-     * Extracts the date from the deadline string.
-     *
-     * @param input Deadline string.
-     * @return LocalDate object if the deadline contains a valid date, null otherwise.
-     */
-    private static LocalDate extractDate(String input) {
-        // Regex pattern for yyyy-mm-dd
-        Pattern datePattern = Pattern.compile("(\\d{4}-\\d{2}-\\d{2})");
-
-        // Match the pattern in the input string
-        Matcher matcher = datePattern.matcher(input);
-
-        if (matcher.find()) {
-            String dateString = matcher.group(1);
-            // Convert the string to a LocalDate
-            return LocalDate.parse(dateString);
-        }
-
-        return null;
-    }
-
-    /**
      * Returns the deadline string with data replaced by given pattern.
      */
     private String getFormattedDeadline() {
         if (this.date != null) {
-            return by.replaceFirst(date.toString(), date.format(DateTimeFormatter.ofPattern("MMM d yyyy")));
+            return by.replaceFirst(date.toString(), DateUtils.formatDate(date));
         }
         return by;
     }

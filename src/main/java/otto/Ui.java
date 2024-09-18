@@ -1,7 +1,5 @@
 package otto;
 
-import java.util.ArrayList;
-
 /**
  * Contains methods to interact with the user.
  */
@@ -13,7 +11,7 @@ public class Ui {
      * @param taskList List of tasks.
      */
     public String displayTaskList(TaskList taskList) {
-        return OttoResponses.showList + taskList.toString();
+        return OttoResponses.SHOW_LIST + taskList.toString();
     }
 
     /**
@@ -22,7 +20,7 @@ public class Ui {
      * @param findList List of tasks that match the search query.
      */
     public String displayFindResult(TaskList findList) {
-        return OttoResponses.showFindResults + findList.toString();
+        return OttoResponses.SHOW_FIND_RESULTS + findList.toString();
     }
 
     /**
@@ -32,8 +30,8 @@ public class Ui {
      * @param numOfTasks Number of tasks in the list.
      */
     public String displayAddedTask(Task newTask, int numOfTasks) {
-        return OttoResponses.addTask + newTask.toString()
-                + String.format(OttoResponses.numOfTasks, numOfTasks);
+        return OttoResponses.ADD_TASK + newTask.toString()
+                + String.format(OttoResponses.NUM_OF_TASKS, numOfTasks);
     }
 
     /**
@@ -43,9 +41,9 @@ public class Ui {
      * @param numOfTasks Number of tasks left in the list.
      */
     public String displayDeletedTask(Task deletedTask, int numOfTasks) {
-        return OttoResponses.deleteTask
+        return OttoResponses.DELETE_TASK
                 + deletedTask.toString()
-                + String.format(OttoResponses.numOfTasks, numOfTasks);
+                + String.format(OttoResponses.NUM_OF_TASKS, numOfTasks);
     }
 
     /**
@@ -56,8 +54,8 @@ public class Ui {
      */
     public String displayMarkedTask(boolean status, Task task) {
         return (status
-                ? OttoResponses.complete
-                : OttoResponses.incomplete)
+                ? OttoResponses.COMPLETE
+                : OttoResponses.INCOMPLETE)
                 + task.toString();
     }
 
