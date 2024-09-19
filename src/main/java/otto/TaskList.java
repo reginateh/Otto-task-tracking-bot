@@ -34,9 +34,9 @@ public class TaskList {
     public Task addTask(String[] info) {
         String type = info[0];
         Task newTask = switch (type) {
-            case "todo" -> new Todo(info[1]);
-            case "deadline" -> new Deadline(info[1], info[2]);
-            case "event" -> new Event(info[1], info[2], info[3]);
+            case "todo" -> new Todo(info[1], info[2]);
+            case "deadline" -> new Deadline(info[1], info[2], info[3]);
+            case "event" -> new Event(info[1], info[2], info[3], info[4]);
             default -> null;
         };
         if (newTask != null) {
@@ -53,8 +53,6 @@ public class TaskList {
      * @return Task that was deleted.
      */
     public Task deleteTask(int taskIndex) {
-        assert taskIndex >= 0 && taskIndex < this.taskList.size() : "Task index out of bounds!";
-
         Task deleted = this.taskList.remove(taskIndex);
         Storage.saveTasks(this.taskList);
         return deleted;
@@ -68,8 +66,6 @@ public class TaskList {
      * @return Task that was marked.
      */
     public Task markComplete(int taskIndex, boolean status) {
-        assert taskIndex >= 0 && taskIndex < this.taskList.size() : "Task index out of bounds!";
-
         if (taskIndex >= this.taskList.size()) {
             throw new IndexOutOfBoundsException();
         }
@@ -97,6 +93,24 @@ public class TaskList {
         ArrayList<Task> foundTasks = new ArrayList<>();
         for (Task task : taskList) {
             if (task.getDescription().contains(keyword)) {
+                foundTasks.add(task);
+            }
+        }
+        return new TaskList(foundTasks);
+    }
+
+    /**
+     * Finds tasks that contain the specified tag.
+     *
+     * @param tagName Name of the tag. Doesn't contain prefix #.
+     * @return TaskList containing tasks that contain the tag.
+     */
+    public TaskList findTasksWithTag(String tagName) {
+        assert tagName != null && !tagName.isEmpty() : "Tag name cannot be null or empty!";
+
+        ArrayList<Task> foundTasks = new ArrayList<>();
+        for (Task task : taskList) {
+            if (task.hasTag(tagName)) {
                 foundTasks.add(task);
             }
         }
