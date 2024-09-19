@@ -2,6 +2,7 @@ package otto;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,7 +25,11 @@ public class DateUtils {
         if (matcher.find()) {
             String dateString = matcher.group(1);
             // Convert the string to a LocalDate
-            return LocalDate.parse(dateString);
+            try {
+                return LocalDate.parse(dateString);
+            } catch (DateTimeParseException e) {
+                return null;
+            }
         }
 
         return null;
