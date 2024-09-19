@@ -24,6 +24,14 @@ public class Ui {
     }
 
     /**
+     * Displays the list of tasks that match the tag.
+     *
+     * @param findList List of tasks that match the tag.
+     */
+    public String displayFindTagResult(TaskList findList) {
+        return OttoResponses.SHOW_FIND_RESULTS + findList.toString();
+    }
+    /**
      * Displays the message when the user adds a task.
      *
      * @param newTask Task that is added.

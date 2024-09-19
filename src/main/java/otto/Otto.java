@@ -109,6 +109,7 @@ public class Otto {
                 case "todo", "deadline", "event" -> this.addTask(Parser.parseTask(command[0].toLowerCase(), userInput));
                 case "delete" -> this.deleteTask(Parser.parseDeleteTask(command));
                 case "find" -> ui.displayFindResult(this.taskList.findTasks(Parser.parseFindTask(userInput)));
+                case "tag" -> ui.displayFindTagResult(this.taskList.findTasksWithTag(Parser.parseFindTag(userInput)));
                 default -> throw new OttoException(OttoResponses.UNKNOWN_COMMAND_ERROR);
             };
         } catch (OttoException e) {

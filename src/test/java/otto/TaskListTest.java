@@ -15,7 +15,7 @@ public class TaskListTest {
 
     @Test
     public void testAddTodoTask() {
-        String[] info = {"todo", "Buy milk"};
+        String[] info = {"todo", "Buy milk", ""};
         Task task = taskList.addTask(info);
 
         assertNotNull(task, "Task should be added");
@@ -25,8 +25,20 @@ public class TaskListTest {
     }
 
     @Test
+    public void testAddTodoTask_WithTags() {
+        String[] info = {"todo", "Buy milk", "#groceries #urgent"};
+        Task task = taskList.addTask(info);
+
+        assertNotNull(task, "Task should be added");
+        assertInstanceOf(Todo.class, task, "Task should be of type Todo");
+        assertEquals("Buy milk", task.getDescription(), "Description should match");
+        assertEquals(1, taskList.getNumOfTasks(), "TaskList size should be 1 after adding");
+        assertEquals("#groceries #urgent ", task.getTags(), "Tags should match");
+    }
+
+    @Test
     public void testAddDeadlineTask() {
-        String[] info = {"deadline", "Submit assignment", "tomorrow"};
+        String[] info = {"deadline", "Submit assignment", "tomorrow", ""};
         Task task = taskList.addTask(info);
 
         assertNotNull(task, "Task should be added");
@@ -37,8 +49,21 @@ public class TaskListTest {
     }
 
     @Test
+    public void testAddDeadlineTask_WithTags() {
+        String[] info = {"deadline", "Submit assignment", "tomorrow", "#school"};
+        Task task = taskList.addTask(info);
+
+        assertNotNull(task, "Task should be added");
+        assertInstanceOf(Deadline.class, task, "Task should be of type Deadline");
+        assertEquals("Submit assignment", task.getDescription(), "Description should match");
+        assertEquals("tomorrow", ((Deadline) task).getDeadline(), "Deadline should match");
+        assertEquals(1, taskList.getNumOfTasks(), "TaskList size should be 1 after adding");
+        assertEquals("#school ", task.getTags(), "Tags should match");
+    }
+
+    @Test
     public void testAddEventTask() {
-        String[] info = {"event", "Party", "12pm", "2pm"};
+        String[] info = {"event", "Party", "12pm", "2pm", ""};
         Task task = taskList.addTask(info);
 
         assertNotNull(task, "Task should be added");
@@ -50,8 +75,22 @@ public class TaskListTest {
     }
 
     @Test
+    public void testAddEventTask_WithTags() {
+        String[] info = {"event", "Party", "12pm", "2pm", "#celebration #friends"};
+        Task task = taskList.addTask(info);
+
+        assertNotNull(task, "Task should be added");
+        assertInstanceOf(Event.class, task, "Task should be of type Event");
+        assertEquals("Party", task.getDescription(), "Description should match");
+        assertEquals("12pm", ((Event) task).getStartTime(), "Event start time should match");
+        assertEquals("2pm", ((Event) task).getEndTime(), "Event end time should match");
+        assertEquals(1, taskList.getNumOfTasks(), "TaskList size should be 1 after adding");
+        assertEquals("#celebration #friends ", task.getTags(), "Tags should match");
+    }
+
+    @Test
     public void testDeleteTask() {
-        String[] info = {"todo", "Buy milk"};
+        String[] info = {"todo", "Buy milk", "#groceries"};
         taskList.addTask(info);
 
         Task deletedTask = taskList.deleteTask(0);
@@ -63,7 +102,7 @@ public class TaskListTest {
 
     @Test
     public void testMarkTaskComplete() {
-        String[] info = {"todo", "Buy milk"};
+        String[] info = {"todo", "Buy milk", ""};
         Task task = taskList.addTask(info);
 
         Task markedTask = taskList.markComplete(0, true);
@@ -73,7 +112,7 @@ public class TaskListTest {
 
     @Test
     public void testMarkTaskIncomplete() {
-        String[] info = {"todo", "Buy milk"};
+        String[] info = {"todo", "Buy milk", ""};
         Task task = taskList.addTask(info);
 
         taskList.markComplete(0, true);  // First mark complete
@@ -84,7 +123,7 @@ public class TaskListTest {
 
     @Test
     public void testDeleteTaskWithInvalidIndex() {
-        String[] info = {"todo", "Buy milk"};
+        String[] info = {"todo", "Buy milk", ""};
         taskList.addTask(info);
 
         assertThrows(IndexOutOfBoundsException.class, () -> taskList.deleteTask(2), "Should throw IndexOutOfBoundsException when deleting non-existing task");
@@ -97,13 +136,25 @@ public class TaskListTest {
 
     @Test
     public void testTaskListToString() {
-        String[] info1 = {"todo", "Buy milk"};
-        String[] info2 = {"deadline", "Submit assignment", "tomorrow"};
+        String[] info1 = {"todo", "Buy milk", ""};
+        String[] info2 = {"deadline", "Submit assignment", "tomorrow", ""};
         taskList.addTask(info1);
         taskList.addTask(info2);
 
-        String expected = "\n1. [T][ ] Buy milk" +
+        String expected = "\n1. [T][ ] Buy milk " +
                 "\n2. [D][ ] Submit assignment (by: tomorrow)";
+        assertEquals(expected, taskList.toString(), "TaskList string representation should match");
+    }
+
+    @Test
+    public void testTaskListToString_WithTags() {
+        String[] info1 = {"todo", "Buy milk", "#groceries #urgent"};
+        String[] info2 = {"deadline", "Submit assignment", "tomorrow", "#school #important #urgent"};
+        taskList.addTask(info1);
+        taskList.addTask(info2);
+
+        String expected = "\n1. [T][ ] Buy milk #groceries #urgent " +
+                "\n2. [D][ ] Submit assignment #school #important #urgent (by: tomorrow)";
         assertEquals(expected, taskList.toString(), "TaskList string representation should match");
     }
 }

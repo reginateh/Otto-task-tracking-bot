@@ -10,14 +10,12 @@ public class Deadline extends Task {
     /** Date of the deadline. Only exists when the deadline contains a valid date format. */
     private LocalDate date;
 
-    /**
-     * Creates a deadline task.
-     * Default is incomplete.
-     * @param description Description of the deadline.
-     * @param by Deadline of the task.
-     */
-    public Deadline(String description, String by) {
-        this(description, by, false);
+    public Deadline(String description, String by, String tags) {
+        this(description, by, false, Parser.parseTags(tags));
+    }
+
+    public Deadline(String description, String by, boolean isComplete) {
+        this(description, by, isComplete, new TagList());
     }
 
     /**
@@ -25,9 +23,10 @@ public class Deadline extends Task {
      * @param description Description of the deadline.
      * @param by Deadline of the task.
      * @param isComplete True if the task is complete, false otherwise.
+     * @param tags Tags of the task.
      */
-    public Deadline(String description, String by, boolean isComplete) {
-        super(description, isComplete);
+    public Deadline(String description, String by, boolean isComplete, TagList tags) {
+        super(description, isComplete, tags);
         this.by = by;
         this.date = DateUtils.extractDate(by);
     }
@@ -56,6 +55,6 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + getFormattedDeadline() + ")";
+        return "[D]" + super.toString() + "(by: " + getFormattedDeadline() + ")";
     }
 }
