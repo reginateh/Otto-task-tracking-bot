@@ -9,4 +9,4 @@ Otto is a command-based task-tracking bot that helps you manage tasks and deadli
 Prerequisites: JDK 17
 
 1. Download the `otto.jar` file from the newest release.
-2. Launch the software and refer to the [user guide](https://reginateh.github.io/ip/) for the available commands and features.
+2. Launch the software and refer to the [user guide](https://reginateh.github.io/Otto-task-tracking-bot/) for the available commands and features.
